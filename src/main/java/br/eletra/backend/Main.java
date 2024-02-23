@@ -1,4 +1,4 @@
-package br.eletra;
+package br.eletra.backend;
 
 public class Main {
 
