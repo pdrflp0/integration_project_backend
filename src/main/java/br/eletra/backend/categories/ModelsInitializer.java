@@ -4,7 +4,6 @@ import java.util.*;
 
 public class ModelsInitializer {
 
-    // Method to initialize the models and return the model map by row and subcategory
     public Map<String, Map<String, List<String>>> initializeModels() {
         Map<String, Map<String, List<String>>> modelsPerLine = new HashMap<>();
 
