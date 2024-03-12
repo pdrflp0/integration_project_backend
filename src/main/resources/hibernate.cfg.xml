@@ -10,5 +10,9 @@
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <mapping class="br.eletra.backend.models.Line"/>
+        <mapping class="br.eletra.backend.models.Category"/>
+        <mapping class="br.eletra.backend.models.Model"/>
     </session-factory>
 </hibernate-configuration>
