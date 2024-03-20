@@ -7,12 +7,13 @@
         <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/integration_project_bd</property>
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.connection.password">87307944</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL95Dialect</property>
         <property name="hibernate.show_sql">true</property>
-        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.hbm2ddl.auto">validate</property>
+        <property name="hibernate.current_session_context_class">thread</property>
 
-        <mapping class="br.eletra.backend.models.Line"/>
-        <mapping class="br.eletra.backend.models.Category"/>
-        <mapping class="br.eletra.backend.models.Model"/>
+        <mapping class="br.eletra.backend.models.LineEntity"/>
+        <mapping class="br.eletra.backend.models.CategoryEntity"/>
+        <mapping class="br.eletra.backend.models.ModelEntity"/>
     </session-factory>
 </hibernate-configuration>

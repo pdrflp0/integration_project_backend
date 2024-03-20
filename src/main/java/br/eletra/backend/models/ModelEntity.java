@@ -3,14 +3,15 @@ package br.eletra.backend.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "lines")
-public class Line {
+@Table(name = "models")
+public class ModelEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "name")
     private String name;
-
-    public Line() {
-    }
 
     public String getName() {
         return name;

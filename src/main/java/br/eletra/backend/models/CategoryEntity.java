@@ -3,13 +3,22 @@ package br.eletra.backend.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "models")
-public class Model {
+@Table(name = "categories")
+public class CategoryEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "name")
     private String name;
 
-    public Model() {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
