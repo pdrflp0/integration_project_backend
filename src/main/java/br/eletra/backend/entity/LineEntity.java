@@ -1,10 +1,10 @@
-package br.eletra.backend.models;
+package br.eletra.backend.entity;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "models")
-public class ModelEntity {
+@Table(name = "lines")
+public class LineEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,6 +12,20 @@ public class ModelEntity {
 
     @Column(name = "name")
     private String name;
+
+    public LineEntity() {}
+
+    public LineEntity(String name) {
+        this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

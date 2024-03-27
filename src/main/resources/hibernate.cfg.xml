@@ -12,8 +12,8 @@
         <property name="hibernate.hbm2ddl.auto">validate</property>
         <property name="hibernate.current_session_context_class">thread</property>
 
-        <mapping class="br.eletra.backend.models.LineEntity"/>
-        <mapping class="br.eletra.backend.models.CategoryEntity"/>
-        <mapping class="br.eletra.backend.models.ModelEntity"/>
+        <mapping class="br.eletra.backend.entity.LineEntity"/>
+        <mapping class="br.eletra.backend.entity.CategoryEntity"/>
+        <mapping class="br.eletra.backend.entity.ModelEntity"/>
     </session-factory>
 </hibernate-configuration>

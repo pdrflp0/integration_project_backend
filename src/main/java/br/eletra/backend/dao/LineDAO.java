@@ -1,45 +1,32 @@
 package br.eletra.backend.dao;
 
-import br.eletra.backend.models.LineEntity;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+import br.eletra.backend.entity.LineEntity;
 
 import java.util.List;
 
 @Repository
 public class LineDAO {
 
-    private final SessionFactory sessionFactory;
+    private final Session session;
 
     @Autowired
-    public LineDAO(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    public LineDAO(Session session) {
+        this.session = session;
     }
 
-    public void saveLine(LineEntity line) {
-        Session session = sessionFactory.getCurrentSession();
-        session.save(line);
-    }
-
+    @Transactional
     public List<LineEntity> getAllLines() {
-        Session session = sessionFactory.getCurrentSession();
         return session.createQuery("from LineEntity", LineEntity.class).getResultList();
     }
 
-    public LineEntity getLineById(Long id) {
-        Session session = sessionFactory.getCurrentSession();
-        return session.get(LineEntity.class, id);
-    }
-
-    public void updateLine(LineEntity line) {
-        Session session = sessionFactory.getCurrentSession();
-        session.update(line);
-    }
-
-    public void deleteLine(LineEntity line) {
-        Session session = sessionFactory.getCurrentSession();
-        session.delete(line);
+    @Transactional
+    public LineEntity getLineByName(String lineName) {
+        return session.createQuery("from LineEntity where name = :lineName", LineEntity.class)
+                .setParameter("lineName", lineName)
+                .uniqueResult();
     }
 }

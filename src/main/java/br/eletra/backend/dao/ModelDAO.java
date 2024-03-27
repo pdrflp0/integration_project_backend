@@ -1,12 +1,11 @@
 package br.eletra.backend.dao;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import br.eletra.backend.models.ModelEntity;
-import org.hibernate.Transaction;
+import br.eletra.backend.entity.ModelEntity;
+import br.eletra.backend.entity.CategoryEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,32 +14,38 @@ import java.util.List;
 @Repository
 public class ModelDAO {
 
-    private final SessionFactory sessionFactory;
+    private final Session session;
     private static final Logger logger = LoggerFactory.getLogger(ModelDAO.class);
 
     @Autowired
-    public ModelDAO(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    public ModelDAO(Session session) {
+        this.session = session;
     }
 
     @Transactional
     public List<ModelEntity> getAllModels() {
-        Session session = sessionFactory.getCurrentSession();
         return session.createQuery("from ModelEntity", ModelEntity.class).getResultList();
     }
 
     @Transactional
+    public List<ModelEntity> getModelsByLine(String lineName) {
+        return session.createQuery("from ModelEntity m where m.category.line.name = :lineName", ModelEntity.class)
+                .setParameter("lineName", lineName)
+                .getResultList();
+    }
+
+    @Transactional
+    public List<ModelEntity> getModelsByCategory(CategoryEntity category) {
+        return session.createQuery("select m from ModelEntity m where m.category = :category", ModelEntity.class)
+                .setParameter("category", category)
+                .getResultList();
+    }
+
+    @Transactional
     public void saveModel(ModelEntity modelEntity) {
-        Transaction transaction = null;
         try {
-            Session session = sessionFactory.getCurrentSession();
-            transaction = session.beginTransaction();
             session.save(modelEntity);
-            transaction.commit();
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
             logger.error("Erro ao salvar modelo", e);
         }
     }
