@@ -13,7 +13,6 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <hibernate.version>5.4.32.Final</hibernate.version>
-        <spring.boot.version>2.6.3</spring.boot.version>
         <javafx.version>11.0.2</javafx.version>
         <javax.persistence.version>2.2</javax.persistence.version>
         <postgresql.version>42.3.1</postgresql.version>
