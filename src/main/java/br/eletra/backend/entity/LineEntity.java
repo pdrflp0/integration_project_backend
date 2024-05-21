@@ -15,7 +15,7 @@ public class LineEntity implements Serializable {
     @Column(name = "name")
     private String lineName;
 
-    public LineEntity(String name , Short id) {
+    public LineEntity(String name, Short id) {
         setLineName(name);
         setId(id);
     }

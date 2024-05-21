@@ -19,7 +19,7 @@ public class CategoryEntity implements Serializable {
     @JoinColumn(name = "line_id")
     private LineEntity line;
 
-    public CategoryEntity(String name , Short id) {
+    public CategoryEntity(String name, Short id) {
         setCategoryName(name);
         setId(id);
     }

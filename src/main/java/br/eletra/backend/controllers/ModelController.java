@@ -33,7 +33,7 @@ public class ModelController {
 
     @PostMapping("/models")
     @ResponseBody
-    @ApiOperation(value="Return a new model")
+    @ApiOperation(value="Return model")
     public ModelEntity postModelEntity(@RequestBody ModelEntity ModelEntity) {
         return modelRepository.save(ModelEntity);
     }
@@ -41,18 +41,20 @@ public class ModelController {
     @PutMapping("/models")
     @ResponseBody
     @ApiOperation(value="Update model")
-    public String updateModelEntity(@RequestBody ModelEntity ModelEntity) {
-        modelRepository.save(ModelEntity);
-        return "Model updated";
+    public ModelEntity updateModelEntity(@RequestBody ModelEntity ModelEntity) {
+        return modelRepository.save(ModelEntity);
     }
 
     @DeleteMapping("/models/{model-name}")
     @ResponseBody
     @ApiOperation(value="Delete model")
-    public String deleteModelEntity(@PathVariable(value = "model-name") String modelName) {
+    public boolean deleteModelEntity(@PathVariable(value = "model-name") String modelName) {
         ModelEntity ModelEntity = modelRepository.findByModelName(modelName);
-        modelRepository.delete(ModelEntity);
-        return "Model deleted";
+        if (ModelEntity != null) {
+            modelRepository.delete(ModelEntity);
+            return modelRepository.findByModelName(modelName) == null;
+        }
+        return false;
     }
 
     @GetMapping("/models")

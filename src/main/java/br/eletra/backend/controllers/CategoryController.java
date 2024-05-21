@@ -33,7 +33,7 @@ public class CategoryController {
 
     @PostMapping("/categories")
     @ResponseBody
-    @ApiOperation(value="Return new category")
+    @ApiOperation(value="Return category")
     public CategoryEntity postCategoryEntity(@RequestBody CategoryEntity CategoryEntity) {
         return categoryRepository.save(CategoryEntity);
     }
@@ -41,18 +41,20 @@ public class CategoryController {
     @PutMapping("/categories")
     @ResponseBody
     @ApiOperation(value="Update category")
-    public String updateCategoryEntity(@RequestBody CategoryEntity CategoryEntity) {
-        categoryRepository.save(CategoryEntity);
-        return "Category updated";
+    public CategoryEntity updateCategoryEntity(@RequestBody CategoryEntity CategoryEntity) {
+        return categoryRepository.save(CategoryEntity);
     }
 
     @DeleteMapping("/categories/{category-name}")
     @ResponseBody
     @ApiOperation(value="Delete category")
-    public String deleteCategoryEntity(@PathVariable(value = "category-name") String categoryName) {
-        CategoryEntity CategoryEntity = categoryRepository.findByCategoryName(categoryName);
-        categoryRepository.delete(CategoryEntity);
-        return "Category deleted";
+    public boolean deleteCategoryEntity(@PathVariable(value = "category-name") String categoryName) {
+        CategoryEntity categoryEntity = categoryRepository.findByCategoryName(categoryName);
+        if (categoryEntity != null) {
+            categoryRepository.delete(categoryEntity);
+            return categoryRepository.findByCategoryName(categoryName) == null;
+        }
+        return false;
     }
 
     @GetMapping("/categories")

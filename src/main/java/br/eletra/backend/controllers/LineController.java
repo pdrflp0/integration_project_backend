@@ -28,7 +28,7 @@ public class LineController {
 
     @PostMapping("/lines")
     @ResponseBody
-    @ApiOperation(value="Return new line")
+    @ApiOperation(value="Return line")
     public LineEntity postLineEntity(@RequestBody LineEntity LineEntity) {
         return lineRepository.save(LineEntity);
     }
@@ -36,18 +36,20 @@ public class LineController {
     @PutMapping("/lines")
     @ResponseBody
     @ApiOperation(value="Update line")
-    public String updateLineEntity(@RequestBody LineEntity LineEntity) {
-        lineRepository.save(LineEntity);
-        return "Line updated";
+    public LineEntity updateLineEntity(@RequestBody LineEntity LineEntity) {
+        return lineRepository.save(LineEntity);
     }
 
     @DeleteMapping("/lines/{line-name}")
     @ResponseBody
     @ApiOperation(value="Delete line")
-    public String deleteLineEntity(@PathVariable(value = "line-name") String lineName) {
+    public boolean deleteLineEntity(@PathVariable(value = "line-name") String lineName) {
         LineEntity LineEntity = lineRepository.findByLineName(lineName);
-        lineRepository.delete(LineEntity);
-        return "Line deleted";
+        if (LineEntity != null) {
+            lineRepository.delete(LineEntity);
+            return lineRepository.findByLineName(lineName) == null;
+        }
+        return false;
     }
 
     @GetMapping("/lines")

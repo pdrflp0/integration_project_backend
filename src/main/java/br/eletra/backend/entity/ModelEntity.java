@@ -10,7 +10,7 @@ public class ModelEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Short id;
 
     @Column(name = "name")
@@ -20,7 +20,7 @@ public class ModelEntity implements Serializable {
     @JoinColumn(name = "subcategory_id")
     private CategoryEntity category;
 
-    public ModelEntity(String modelName , Short id) {
+    public ModelEntity(String modelName, Short id) {
         setModelName(modelName);
         setId(id);
     }
@@ -28,7 +28,7 @@ public class ModelEntity implements Serializable {
     public ModelEntity() {
     }
 
-    public void ModelEntity(CategoryEntity category , String modelName){
+    public void ModelEntity(CategoryEntity category, String modelName){
         this.category = category;
         this.modelName = modelName;
     }
