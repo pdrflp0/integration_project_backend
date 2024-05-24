@@ -1,45 +1,63 @@
 package br.eletra.backend.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "categories")
-public class CategoryEntity {
+public class CategoryEntity implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Short id;
 
     @Column(name = "name")
-    private String name;
+    private String categoryName;
 
     @ManyToOne
     @JoinColumn(name = "line_id")
     private LineEntity line;
-    public CategoryEntity() {}
 
-    public CategoryEntity(String name, LineEntity line) {
-        this.name = name;
-        this.line = line;
+    public CategoryEntity(String name, Short id) {
+        setCategoryName(name);
+        setId(id);
     }
 
-    public Long getId() {
+    public CategoryEntity() {
+
+    }
+
+    public Short getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Short id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getLine() {
+        return line.getLineName();
     }
 
-    public LineEntity getLine() {
-        return line;
+    public void setLine(LineEntity line) {
+        this.line = line;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    @Override
+    public String toString() {
+        return "CategoryEntity{" +
+                "id=" + id +
+                ", categoryName='" + categoryName + '\'' +
+                ", line=" + line +
+                '}';
     }
 }

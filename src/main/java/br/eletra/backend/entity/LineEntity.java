@@ -1,37 +1,48 @@
 package br.eletra.backend.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "lines")
-public class LineEntity {
+public class LineEntity implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Short id;
 
     @Column(name = "name")
-    private String name;
+    private String lineName;
+
+    public LineEntity(String name, Short id) {
+        setLineName(name);
+        setId(id);
+    }
 
     public LineEntity() {}
 
-    public LineEntity(String name) {
-        this.name = name;
+    public String getLineName() {
+        return lineName;
     }
 
-    public Long getId() {
+    public void setLineName(String lineName) {
+        this.lineName = lineName;
+    }
+
+    public Short getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Short id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public String toString() {
+        return "LineEntity{" +
+                "id=" + id +
+                ", lineName='" + lineName + '\'' +
+                '}';
     }
 }

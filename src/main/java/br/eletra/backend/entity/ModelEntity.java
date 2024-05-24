@@ -1,45 +1,66 @@
 package br.eletra.backend.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "models")
-public class ModelEntity {
+public class ModelEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Short id;
 
     @Column(name = "name")
-    private String name;
+    private String modelName;
 
     @ManyToOne
     @JoinColumn(name = "subcategory_id")
     private CategoryEntity category;
-    public ModelEntity() {}
 
-    public ModelEntity(String name, CategoryEntity category) {
-        this.name = name;
-        this.category = category;
+    public ModelEntity(String modelName, Short id) {
+        setModelName(modelName);
+        setId(id);
     }
 
-    public Long getId() {
+    public ModelEntity() {
+    }
+
+    public void ModelEntity(CategoryEntity category, String modelName){
+        this.category = category;
+        this.modelName = modelName;
+    }
+
+    @Override
+    public String toString(){
+        return modelName;
+    }
+
+    public Short getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public Short setId(Short id) {
         this.id = id;
+        return id;
     }
 
-    public String getName() {
-        return name;
+    public String getModelName() {
+        return modelName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setModelName(String modelName) {
+        this.modelName = modelName;
     }
 
-    public CategoryEntity getCategory() {
-        return category;
+    public String getCategory() {
+
+        return category.getCategoryName();
+    }
+
+    public void setCategory(CategoryEntity category) {
+        this.category = category;
     }
 }
