@@ -56,7 +56,6 @@ public class ModelEntity implements Serializable {
     }
 
     public String getCategory() {
-
         return category.getCategoryName();
     }
 
