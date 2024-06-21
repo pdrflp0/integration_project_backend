@@ -3,6 +3,7 @@ package br.eletra.backend.controllers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import br.eletra.backend.entity.ModelEntity;
@@ -47,14 +48,14 @@ public class ModelController {
 
     @DeleteMapping("/models/{model-name}")
     @ResponseBody
-    @ApiOperation(value="Delete model")
-    public boolean deleteModelEntity(@PathVariable(value = "model-name") String modelName) {
-        ModelEntity ModelEntity = modelRepository.findByModelName(modelName);
-        if (ModelEntity != null) {
-            modelRepository.delete(ModelEntity);
-            return modelRepository.findByModelName(modelName) == null;
+    @ApiOperation(value="Delete a model")
+    public ResponseEntity<Boolean> deleteModelEntity(@PathVariable(value = "model-name") String modelName) {
+        ModelEntity modelEntity = modelRepository.findByModelName(modelName);
+        if (modelEntity != null) {
+            modelRepository.delete(modelEntity);
+            return ResponseEntity.ok(true);
         }
-        return false;
+        return ResponseEntity.ok(false);
     }
 
     @GetMapping("/models")

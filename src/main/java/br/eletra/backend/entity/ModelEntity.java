@@ -28,6 +28,9 @@ public class ModelEntity implements Serializable {
     public ModelEntity() {
     }
 
+    public ModelEntity(CategoryEntity category, String model0, short i) {
+    }
+
     public void ModelEntity(CategoryEntity category, String modelName){
         this.category = category;
         this.modelName = modelName;

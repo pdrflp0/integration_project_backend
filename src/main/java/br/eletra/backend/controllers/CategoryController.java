@@ -3,6 +3,8 @@ package br.eletra.backend.controllers;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import br.eletra.backend.entity.CategoryEntity;
@@ -48,13 +50,14 @@ public class CategoryController {
     @DeleteMapping("/categories/{category-name}")
     @ResponseBody
     @ApiOperation(value="Delete category")
-    public boolean deleteCategoryEntity(@PathVariable(value = "category-name") String categoryName) {
+    public ResponseEntity<Boolean> deleteCategoryEntity(@PathVariable(value = "category-name") String categoryName) {
         CategoryEntity categoryEntity = categoryRepository.findByCategoryName(categoryName);
         if (categoryEntity != null) {
             categoryRepository.delete(categoryEntity);
-            return categoryRepository.findByCategoryName(categoryName) == null;
+            boolean exists = categoryRepository.findByCategoryName(categoryName) != null;
+            return ResponseEntity.ok(!exists);
         }
-        return false;
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
     }
 
     @GetMapping("/categories")
