@@ -22,28 +22,28 @@ public class ModelController {
     private ModelRepository modelRepository;
 
     @Autowired
-    private ModelServices ModelServices;
+    private ModelServices modelServices;
 
     @GetMapping("/models/{category-name}")
     @ResponseBody
     @ApiOperation(value="Return model")
     public List<ModelEntity> getModelEntity(@PathVariable(value="category-name") String categoryName) {
-        List<ModelEntity> list = ModelServices.getModelNameByCategoryName(categoryName);
+        List<ModelEntity> list = modelServices.getModelNameByCategoryName(categoryName);
         return list;
     }
 
     @PostMapping("/models")
     @ResponseBody
     @ApiOperation(value="Return model")
-    public ModelEntity postModelEntity(@RequestBody ModelEntity ModelEntity) {
-        return modelRepository.save(ModelEntity);
+    public ModelEntity postModelEntity(@RequestBody ModelEntity modelEntity) {
+        return modelRepository.save(modelEntity);
     }
 
     @PutMapping("/models")
     @ResponseBody
     @ApiOperation(value="Update model")
-    public ModelEntity updateModelEntity(@RequestBody ModelEntity ModelEntity) {
-        return modelRepository.save(ModelEntity);
+    public ModelEntity updateModelEntity(@RequestBody ModelEntity modelEntity) {
+        return modelRepository.save(modelEntity);
     }
 
     @DeleteMapping("/models/{model-name}")
@@ -55,7 +55,7 @@ public class ModelController {
             modelRepository.delete(modelEntity);
             return ResponseEntity.ok(true);
         }
-        return ResponseEntity.ok(false);
+        return ResponseEntity.status(404).body(false);
     }
 
     @GetMapping("/models")

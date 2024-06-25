@@ -27,7 +27,7 @@ public class CategoryController {
 
     @GetMapping("/categories/{line-name}")
     @ResponseBody
-    @ApiOperation(value="Return category")
+    @ApiOperation(value = "Return category")
     public List<CategoryEntity> getCategoriesByLine(@PathVariable(value="line-name") String lineName) {
         List<CategoryEntity> list = CategoryServices.getCategoriesByLineName(lineName);
         return list;
@@ -35,21 +35,21 @@ public class CategoryController {
 
     @PostMapping("/categories")
     @ResponseBody
-    @ApiOperation(value="Return category")
+    @ApiOperation(value = "Return category")
     public CategoryEntity postCategoryEntity(@RequestBody CategoryEntity CategoryEntity) {
         return categoryRepository.save(CategoryEntity);
     }
 
     @PutMapping("/categories")
     @ResponseBody
-    @ApiOperation(value="Update category")
+    @ApiOperation(value = "Update category")
     public CategoryEntity updateCategoryEntity(@RequestBody CategoryEntity CategoryEntity) {
         return categoryRepository.save(CategoryEntity);
     }
 
     @DeleteMapping("/categories/{category-name}")
     @ResponseBody
-    @ApiOperation(value="Delete category")
+    @ApiOperation(value = "Delete category")
     public ResponseEntity<Boolean> deleteCategoryEntity(@PathVariable(value = "category-name") String categoryName) {
         CategoryEntity categoryEntity = categoryRepository.findByCategoryName(categoryName);
         if (categoryEntity != null) {
@@ -62,7 +62,7 @@ public class CategoryController {
 
     @GetMapping("/categories")
     @ResponseBody
-    @ApiOperation(value="Return list of categories")
+    @ApiOperation(value = "Return list of categories")
     public List<CategoryEntity> getCategoryEntityList() {
         return categoryRepository.findAll();
     }

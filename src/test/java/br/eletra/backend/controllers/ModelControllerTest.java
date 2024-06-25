@@ -75,25 +75,25 @@ public class ModelControllerTest {
     @Test
     void testPostModelEntity() {
         // Given
-        ModelEntity mockModel = new ModelEntity("Model0", (short) 0);
+        ModelEntity modelEntity = new ModelEntity("Model0", (short) 0);
 
-        when(repository.save(mockModel)).thenReturn(mockModel);
+        when(repository.save(modelEntity)).thenReturn(modelEntity);
 
         // When
-        ModelEntity result = controller.postModelEntity(mockModel);
+        ModelEntity result = controller.postModelEntity(modelEntity);
 
         // Then
-        assertThat(result).isEqualTo(mockModel);
-        verify(repository).save(mockModel);
+        assertThat(result).isEqualTo(modelEntity);
+        verify(repository).save(modelEntity);
         verifyNoMoreInteractions(repository);
     }
 
     @Test
-    void testDeleteCategoryEntity() {
+    void testDeleteModelEntity() {
         // Given
-        ModelEntity mockModel = new ModelEntity(category, "Model0", (short) 0);
+        ModelEntity modelEntity = new ModelEntity(category, "Model0", (short) 0);
 
-        when(repository.findByModelName("Model0")).thenReturn(mockModel);
+        when(repository.findByModelName("Model0")).thenReturn(modelEntity);
 
         // When
         ResponseEntity<Boolean> result = controller.deleteModelEntity("Model0");
@@ -101,23 +101,38 @@ public class ModelControllerTest {
         // Then
         assertEquals(ResponseEntity.ok(true), result);
         verify(repository).findByModelName("Model0");
-        verify(repository).delete(mockModel);
+        verify(repository).delete(modelEntity);
+        verifyNoMoreInteractions(repository);
+    }
+
+    @Test
+    void testDeleteModelEntityNotFound() {
+        // Given
+        when(repository.findByModelName("Model0")).thenReturn(null);
+
+        // When
+        ResponseEntity<Boolean> result = controller.deleteModelEntity("Model0");
+
+        // Then
+        assertEquals(404, result.getStatusCodeValue());
+        assertEquals(false, result.getBody());
+        verify(repository).findByModelName("Model0");
         verifyNoMoreInteractions(repository);
     }
 
     @Test
     void testUpdateModelEntity() {
         // Given
-        ModelEntity mockModel = new ModelEntity("Model0", (short) 0);
+        ModelEntity modelEntity = new ModelEntity("Model0", (short) 0);
 
-        when(repository.save(mockModel)).thenReturn(mockModel);
+        when(repository.save(modelEntity)).thenReturn(modelEntity);
 
         // When
-        ModelEntity result = controller.updateModelEntity(mockModel);
+        ModelEntity result = controller.updateModelEntity(modelEntity);
 
         // Then
-        assertThat(result).isEqualTo(mockModel);
-        verify(repository).save(mockModel);
+        assertThat(result).isEqualTo(modelEntity);
+        verify(repository).save(modelEntity);
         verifyNoMoreInteractions(repository);
     }
 }

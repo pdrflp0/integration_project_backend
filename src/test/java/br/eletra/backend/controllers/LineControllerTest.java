@@ -62,26 +62,26 @@ public class LineControllerTest {
     @Test
     void testPostLineEntity() {
         // Given
-        LineEntity mockLine = new LineEntity("Line0", (short) 0);
+        LineEntity lineEntity = new LineEntity("Line0", (short) 0);
 
-        when(repository.save(mockLine)).thenReturn(mockLine);
+        when(repository.save(lineEntity)).thenReturn(lineEntity);
 
         // When
-        LineEntity result = controller.postLineEntity(mockLine);
+        LineEntity result = controller.postLineEntity(lineEntity);
 
         // Then
-        assertThat(result).isEqualTo(mockLine);
-        verify(repository).save(mockLine);
+        assertThat(result).isEqualTo(lineEntity);
+        verify(repository).save(lineEntity);
         verifyNoMoreInteractions(repository);
     }
 
     @Test
     void testDeleteLineEntity() {
         // Given
-        LineEntity mockLine = new LineEntity("Line0", (short) 0);
+        LineEntity lineEntity = new LineEntity("Line0", (short) 0);
 
-        when(repository.findByLineName("Line0")).thenReturn(mockLine).thenReturn(null);
-        doNothing().when(repository).delete(mockLine);
+        when(repository.findByLineName("Line0")).thenReturn(lineEntity).thenReturn(null);
+        doNothing().when(repository).delete(lineEntity);
 
         // When
         ResponseEntity<Boolean> result = controller.deleteLineEntity("Line0");
@@ -89,23 +89,38 @@ public class LineControllerTest {
         // Then
         assertEquals(ResponseEntity.ok(true), result);
         verify(repository, times(2)).findByLineName("Line0");
-        verify(repository).delete(mockLine);
+        verify(repository).delete(lineEntity);
+        verifyNoMoreInteractions(repository);
+    }
+
+    @Test
+    void testDeleteLineEntityNotFound() {
+        // Given
+        when(repository.findByLineName("Line0")).thenReturn(null);
+
+        // When
+        ResponseEntity<Boolean> result = controller.deleteLineEntity("Line0");
+
+        // Then
+        assertEquals(404, result.getStatusCodeValue());
+        assertEquals(false, result.getBody());
+        verify(repository).findByLineName("Line0");
         verifyNoMoreInteractions(repository);
     }
 
     @Test
     void testPutLineEntity() {
         // Given
-        LineEntity mockLine = new LineEntity("Line0", (short) 0);
+        LineEntity lineEntity = new LineEntity("Line0", (short) 0);
 
-        when(repository.save(mockLine)).thenReturn(mockLine);
+        when(repository.save(lineEntity)).thenReturn(lineEntity);
 
         // When
-        LineEntity result = controller.updateLineEntity(mockLine);
+        LineEntity result = controller.updateLineEntity(lineEntity);
 
         // Then
-        assertThat(result).isEqualTo(mockLine);
-        verify(repository).save(mockLine);
+        assertThat(result).isEqualTo(lineEntity);
+        verify(repository).save(lineEntity);
         verifyNoMoreInteractions(repository);
     }
 }
