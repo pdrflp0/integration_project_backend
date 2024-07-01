@@ -80,7 +80,7 @@ public class LineControllerTest {
         // Given
         LineEntity lineEntity = new LineEntity("Line0", (short) 0);
 
-        when(repository.findByLineName("Line0")).thenReturn(lineEntity).thenReturn(null);
+        when(repository.findByLineName("Line0")).thenReturn(lineEntity);
         doNothing().when(repository).delete(lineEntity);
 
         // When
@@ -88,7 +88,7 @@ public class LineControllerTest {
 
         // Then
         assertEquals(ResponseEntity.ok(true), result);
-        verify(repository, times(2)).findByLineName("Line0");
+        verify(repository, times(1)).findByLineName("Line0");
         verify(repository).delete(lineEntity);
         verifyNoMoreInteractions(repository);
     }

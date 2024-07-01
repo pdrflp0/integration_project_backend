@@ -108,9 +108,7 @@ public class CategoryControllerTest {
     void testShouldDeleteExistingCategoryEntity() {
         // Given
         CategoryEntity mockCategory = new CategoryEntity("Category0", (short) 0);
-        when(repository.findByCategoryName("Category0"))
-                .thenReturn(mockCategory) // Primeira chamada, retorna a categoria
-                .thenReturn(null); // Segunda chamada, após exclusão, retorna null
+        when(repository.findByCategoryName("Category0")).thenReturn(mockCategory);
         doNothing().when(repository).delete(mockCategory);
 
         // When
@@ -120,7 +118,7 @@ public class CategoryControllerTest {
         assertEquals(HttpStatus.OK, result.getStatusCode());
         assertEquals(true, result.getBody());
 
-        verify(repository, times(2)).findByCategoryName("Category0");
+        verify(repository, times(1)).findByCategoryName("Category0");
         verify(repository, times(1)).delete(mockCategory);
         verifyNoMoreInteractions(repository);
     }

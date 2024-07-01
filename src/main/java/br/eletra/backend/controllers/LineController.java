@@ -46,14 +46,13 @@ public class LineController {
     @ResponseBody
     @ApiOperation(value = "Delete a line")
     public ResponseEntity<Boolean> deleteLineEntity(@PathVariable(value = "line-name") String lineName) {
-        LineEntity LineEntity = lineRepository.findByLineName(lineName);
-        if (LineEntity != null) {
-            lineRepository.delete(LineEntity);
-            boolean exists = lineRepository.findByLineName(lineName) != null;
-            return ResponseEntity.ok(!exists);
+        LineEntity lineEntity = lineRepository.findByLineName(lineName);
+        if (lineEntity != null) {
+            lineRepository.delete(lineEntity);
+            return ResponseEntity.ok(true);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
     }
-    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
-}
 
     @GetMapping("/lines")
     @ResponseBody

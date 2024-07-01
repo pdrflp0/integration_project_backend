@@ -49,13 +49,12 @@ public class CategoryController {
 
     @DeleteMapping("/categories/{category-name}")
     @ResponseBody
-    @ApiOperation(value = "Delete category")
+    @ApiOperation(value = "Delete a category")
     public ResponseEntity<Boolean> deleteCategoryEntity(@PathVariable(value = "category-name") String categoryName) {
         CategoryEntity categoryEntity = categoryRepository.findByCategoryName(categoryName);
         if (categoryEntity != null) {
             categoryRepository.delete(categoryEntity);
-            boolean exists = categoryRepository.findByCategoryName(categoryName) != null;
-            return ResponseEntity.ok(!exists);
+            return ResponseEntity.ok(true);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
     }
